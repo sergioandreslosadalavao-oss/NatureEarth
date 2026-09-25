@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Nature Earth — tema oscuro espacial (SRS 3.1 / 7.5).
+   El fondo es espacio profundo; la superficie es azul muy oscuro para que
+   los paneles se lean como vidrio sobre el globo, no como tarjetas de una
+   web clásica. Los acentos por categoría taxonómica cumplen el SRS 6.1.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-espacio: #050810;
+  --color-espacio-2: #0a1120;
+  --color-superficie: #0d1420;
+  --color-superficie-2: #141d2c;
+  --color-borde: #1e2a3d;
+  --color-texto: #e8eef4;
+  --color-texto-suave: #8fa3b8;
+  --color-acento: #38bdf8;
+
+  /* Categorías taxonómicas (SRS 6.1) */
+  --color-mamifero: #f59e0b;
+  --color-ave: #10b981;
+  --color-reptil: #ef4444;
+  --color-anfibio: #22d3ee;
+  --color-pez: #3b82f6;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --animate-deslizar: deslizar 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-aparecer: aparecer 0.2s ease-out;
+  --animate-latido: latido 2.4s ease-in-out infinite;
+  --animate-giro: giro 14s linear infinite;
+}
+
+@keyframes deslizar {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes giro {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-espacio);
+    color: var(--color-texto);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+  }
+
+  /* El nombre científico se muestra siempre en cursiva (estilo taxonómico). */
+  .cientifico {
+    font-style: italic;
+  }
+
+  /* Barra de desplazamiento discreta para los paneles con scroll propio. */
+  .scroll-fino {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-borde) transparent;
+  }
+
+  .scroll-fino::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-fino::-webkit-scrollbar-thumb {
+    background-color: var(--color-borde);
+    border-radius: 999px;
+  }
+
+  ::selection {
+    background-color: rgba(56, 189, 248, 0.28);
+  }
+}
+
+@layer components {
+  /* Vidrio translúcido: el globo se sigue viendo por detrás del panel. */
+  .panel-vidrio {
+    background-color: color-mix(in srgb, var(--color-superficie) 72%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid color-mix(in srgb, var(--color-borde) 85%, transparent);
+  }
+
+  .campo-base {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-borde);
+    background-color: rgba(5, 8, 16, 0.6);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: var(--color-texto);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .campo-base::placeholder {
+    color: color-mix(in srgb, var(--color-texto-suave) 75%, transparent);
+  }
+
+  .campo-base:focus {
+    outline: none;
+    border-color: var(--color-acento);
+    background-color: rgba(5, 8, 16, 0.85);
+  }
+
+  .boton-primario {
+    border-radius: 0.5rem;
+    background-color: var(--color-acento);
+    color: #04121c;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: filter 0.15s ease;
+  }
+
+  .boton-primario:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  .boton-primario:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .boton-secundario {
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto-suave);
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .boton-secundario:hover:not(:disabled) {
+    border-color: var(--color-acento);
+    color: var(--color-texto);
+  }
+
+  .boton-secundario:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Contenedor del lienzo 3D: globe.gl necesita tamaño real para medirse. */
+  .lienzo-globo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .lienzo-globo canvas {
+    display: block;
+    outline: none;
+  }
+
+  /* Tooltip que sigue al marcador sobre el que está el mouse. */
+  .tooltip-marcador {
+    pointer-events: none;
+    transform: translate(-50%, -140%);
+    white-space: nowrap;
+  }
+}
