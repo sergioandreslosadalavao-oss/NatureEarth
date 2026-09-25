@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="globe" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1e6f5c"/>
+      <stop offset="60%" stop-color="#10414f"/>
+      <stop offset="100%" stop-color="#081f2b"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="52" fill="url(#globe)" stroke="#10b981" stroke-width="3"/>
+  <path d="M8 60 Q 60 35 112 60" stroke="#0d5f4e" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M8 70 Q 60 50 112 70" stroke="#0d5f4e" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M8 80 Q 60 65 112 80" stroke="#0d5f4e" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <ellipse cx="60" cy="60" rx="18" ry="30" fill="none" stroke="#0d5f4e" stroke-width="1.2" opacity="0.5"/>
+  <circle cx="42" cy="45" r="5" fill="#f59e0b"/>
+  <circle cx="70" cy="58" r="4.5" fill="#ef4444"/>
+  <circle cx="55" cy="72" r="4" fill="#10b981"/>
+  <circle cx="83" cy="42" r="3.5" fill="#22d3ee"/>
+  <circle cx="30" cy="68" r="3" fill="#f59e0b"/>
+  <circle cx="66" cy="33" r="3" fill="#22d3ee"/>
+</svg>
